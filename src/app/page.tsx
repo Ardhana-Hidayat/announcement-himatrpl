@@ -195,13 +195,13 @@ const MainContent = () => {
         <div className="absolute bottom-[-10%] right-[-10%] w-48 h-48 sm:w-80 sm:h-80 md:w-100 md:h-100 bg-indigo-600/20 rounded-full blur-[80px] sm:blur-[120px] mix-blend-screen animate-pulse" />
       </div>
 
-      <section className="relative z-10 min-h-[100dvh] flex flex-col justify-center items-center px-4 sm:px-6 text-center overflow-hidden py-10 sm:py-0">
+      <section className="relative z-10 h-[100svh] flex flex-col justify-center items-center px-4 sm:px-6 text-center overflow-hidden">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
           // PERBAIKAN 1: space-y-4 (lebih rapat) dan -mt-10 (tarik ke atas sedikit di mobile)
-          className="space-y-4 sm:space-y-8 max-w-5xl mx-auto w-full -mt-10 sm:mt-0"
+          className="space-y-4 sm:space-y-8 max-w-5xl mx-auto w-full -mt-20 sm:mt-0"
         >
           {/* PERBAIKAN 2: Padding dikurangi sedikit (px-3) */}
           <div className="inline-block py-1 px-3 sm:py-1.5 sm:px-6 rounded-full bg-white/5 border border-white/10 backdrop-blur-md text-purple-300 text-[9px] sm:text-xs md:text-sm font-bold tracking-[0.15em] sm:tracking-[0.2em] shadow-lg shadow-purple-900/20">
@@ -225,7 +225,7 @@ const MainContent = () => {
         </motion.div>
 
         <motion.div
-          className="absolute bottom-8 sm:bottom-12 cursor-pointer group"
+          className="absolute bottom-24 sm:bottom-12 cursor-pointer group"
           animate={{ y: [0, 10, 0] }}
           transition={{ repeat: Infinity, duration: 2 }}
           onClick={scrollToContent}
