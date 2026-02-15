@@ -3,16 +3,21 @@
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import { Hexagon, Loader2 } from "lucide-react";
+import { Syne } from "next/font/google";
+// 1. IMPORT COMPONENT IMAGE
+import Image from "next/image"; 
 
-// --- BAGIAN INI YANG PENTING (DITAMBAHKAN) ---
-// Kita harus memberi tahu TypeScript bahwa komponen ini menerima prop 'onFinish'
+const syne = Syne({
+  subsets: ["latin"],
+  weight: ["400", "700", "800"]
+});
+
 interface SplashScreenProps {
   onFinish: () => void;
 }
 
 export default function SplashScreen({ onFinish }: SplashScreenProps) {
   useEffect(() => {
-    // Timer 3.5 detik sebelum splash screen hilang
     const timer = setTimeout(() => {
       onFinish();
     }, 3500);
@@ -23,18 +28,16 @@ export default function SplashScreen({ onFinish }: SplashScreenProps) {
   return (
     <motion.div
       key="splash-screen"
-      className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-slate-950 text-white"
+      className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black text-white overflow-hidden"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      exit={{ opacity: 0, scale: 1.1, filter: "blur(10px)" }}
+      exit={{ opacity: 0, scale: 1.05, filter: "blur(10px)" }}
       transition={{ duration: 0.8, ease: "easeInOut" }}
     >
-      {/* Background Decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div 
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-indigo-500/10 rounded-full blur-[120px] animate-pulse" 
-          style={{ animationDuration: '4s' }}
-        />
+        <div className="absolute top-[-10%] left-[-10%] w-64 h-64 sm:w-96 sm:h-96 bg-purple-600/20 rounded-full blur-[80px] sm:blur-[120px] mix-blend-screen animate-pulse" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-48 h-48 sm:w-80 sm:h-80 bg-indigo-600/20 rounded-full blur-[80px] sm:blur-[120px] mix-blend-screen animate-pulse" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-purple-500/10 rounded-full blur-[60px]" />
       </div>
 
       <motion.div
@@ -45,33 +48,50 @@ export default function SplashScreen({ onFinish }: SplashScreenProps) {
       >
         {/* LOGO AREA */}
         <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="mb-6 relative"
+          animate={{ y: [0, -10, 0] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          className="mb-8 relative"
         >
-          <Hexagon size={100} className="text-indigo-400 fill-indigo-900/20 stroke-[1.5]" />
+          {/* Background Hexagon Putih */}
+          <Hexagon 
+            size={110} 
+            fill="white" 
+            className="text-white stroke-[1.5] drop-shadow-[0_0_25px_rgba(255,255,255,0.4)]" 
+          />
+          
           <div className="absolute inset-0 flex items-center justify-center">
-            <span className="font-bold text-2xl text-indigo-200">TRPL</span>
+            {/* 2. GANTI TEXT DENGAN IMAGE */}
+            {/* Pastikan file 'logo.png' ada di folder public project kamu */}
+            <div className="relative w-14 h-14 sm:w-16 sm:h-16"> 
+              <Image 
+                src="/icon.png"  // <-- Ganti dengan nama file logo kamu
+                alt="Logo HIMA TRPL"
+                fill
+                className="object-contain"
+                priority
+              />
+            </div>
           </div>
         </motion.div>
 
-        {/* TEXT AREA */}
-        <h1 className="text-3xl md:text-4xl font-black tracking-tight mb-2 bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">
-          HIMA TRPL
-        </h1>
-        <p className="text-lg text-slate-300 font-medium tracking-widest uppercase">
-          Kabinet HIMA TRPL
-        </p>
+        <div className="text-center space-y-2">
+          <h1 className={`${syne.className} text-4xl sm:text-5xl font-black tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-violet-400 to-fuchsia-400 drop-shadow-lg`}>
+            HIMA TRPL
+          </h1>
+          
+          <p className="text-sm sm:text-base text-slate-400 font-medium tracking-[0.3em] uppercase">
+            Official Announcement
+          </p>
+        </div>
         
-        {/* LOADING SPINNER */}
         <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2 }}
-          className="mt-12 flex flex-col items-center gap-2 text-slate-400 text-sm"
+          className="mt-16 flex flex-col items-center gap-3 text-slate-500 text-xs tracking-widest uppercase"
         >
-          <Loader2 className="animate-spin" size={20}/>
-          <span>Memuat Pengumuman...</span>
+          <Loader2 className="animate-spin text-purple-400" size={24}/>
+          <span>Wait a moment...</span>
         </motion.div>
       </motion.div>
     </motion.div>
